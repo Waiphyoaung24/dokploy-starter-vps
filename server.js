@@ -74,6 +74,16 @@ app.get('/api/metrics', async (_req, res) => {
     res.status(500).json({ ok: false, error: e.message });
   }
 });
+// Debug endpoint to check env var (remove after debugging)
+app.get('/api/debug-env', (_req, res) => {
+  const dbUrl = process.env.DATABASE_URL;
+  res.json({
+    DATABASE_URL_SET: !!dbUrl,
+    DATABASE_URL_LENGTH: dbUrl ? dbUrl.length : 0,
+    DATABASE_URL_PREVIEW: dbUrl ? dbUrl.substring(0, 30) + '...' : 'NOT SET'
+  });
+});
+
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
